@@ -1,0 +1,255 @@
+$bound-margin: 10px;
+
+.file-dialog-modal-view {
+	display: flex;
+	position: relative;
+
+	width: 100%;
+	height: 100%;
+	
+	flex-direction: column;
+
+	.file-dialog-modal-view-header {
+		display: block;
+
+		position: relative;
+	}
+
+	.file-dialog-modal-view-body {
+		display: flex;
+		position: relative;
+
+		flex-direction: column;
+		flex-grow: 1;
+
+		overflow: auto;
+	}
+
+	.file-dialog-modal-view-footer {
+		display: block;
+
+		position: relative;
+	}
+}
+
+.file-dialog-modal-view-header-title {
+	display: block;
+
+	height: 50px;
+	line-height: 48px;
+	padding: 0px 15px;
+
+	font-size: 18px;
+	font-weight: 300;
+	background-color: $header-title-bg-color;
+	color: $header-title-color;
+}
+
+.file-dialog-modal-view-header-tools {
+	position: relative;
+	display: flex;
+
+	height: 40px;
+	margin-left: $bound-margin;
+	margin-right: $bound-margin;
+
+	align-items: center;
+
+	.file-dialog-modal-view-dir-buttons {
+		display: block;
+		width: 30px;
+
+		flex-shrink: 0;
+
+		button {
+			color: darken($button-bg-color, 20%);
+
+			height: 25px;
+			line-height: 20px;
+			font-size: 16px;
+
+			&:not(:disabled) {
+				background-color: $primary-button-bg-color;
+				color: $primary-button-color;
+			}
+		}
+	}
+
+	.file-dialog-modal-view-dir-path {
+		display: block;
+
+		padding: 0px 10px 0 10px;
+		flex-grow: 1;
+
+		overflow: hidden;
+	}
+
+	.file-dialog-modal-view-dir-search {
+		display: block;
+		position: relative;
+
+		width: 150px;
+
+		flex-shrink: 0;
+
+		input {
+			width: 100%;
+			height: 25px;
+			padding: 0 25px 0 5px;
+		}
+
+		button {
+			position: absolute;
+
+			top: 0;
+			right: 0;
+			width: 25px;
+			height: 25px;
+			line-height: 24px;
+
+			border: none;
+			background: transparent;
+			opacity: .5;
+
+			transition: ease-in-out .2s;
+
+			&:hover {
+				opacity: .7;
+			}
+		}
+	}
+}
+
+.file-dialog-modal-view-header-error, .file-dialog-modal-view-header-alert {
+	height: 50px;
+	padding: 0px 15px;
+
+	font-size: 13px;
+
+	overflow-y: auto;
+	white-space: normal;
+	word-wrap: break-word;
+}
+
+.file-dialog-modal-view-header-error {
+	background-color: $bg-color-error;
+	color: $color-error;
+}
+
+.file-dialog-modal-view-header-alert {
+	line-height: 48px;
+
+	font-size: 18px;
+	font-weight: 300;
+
+	background-color: $bg-color-alert;
+	color: $color-alert;
+}
+
+.file-dialog-modal-view-footer-inputs {
+	display: block;
+
+	margin-left: $bound-margin;
+	margin-right: $bound-margin;
+
+	.file-dialog-modal-view-footer-inputs-report-name {
+		display: flex;
+
+		margin: 8px 0 5px 0;
+		height: 30px;
+		line-height: 28px;
+
+		span {
+			font-size: 13px;
+			margin-right: 5px;
+		}
+
+		input {
+			flex-grow: 1;
+			height: 100%;
+
+			&.invalid {
+				outline: $bg-color-error solid 1px;
+			}
+
+			&.overwrite {
+				outline: $bg-color-warning solid 1px;
+			}
+		}
+		
+		.file-dialog-modal-view-problem-container {
+			width: auto;
+			height: 100%;
+			flex-shrink: 0;
+
+			> div {
+				height: 100%;
+				color: $text-color;
+				cursor: default;
+
+				&.warning {
+					background-color: $bg-color-warning;
+					color: $color-warning;
+				}
+				&.error {
+					background-color: $bg-color-error;
+					color: $color-error;
+				}
+				
+				padding-left: 10px;
+				padding-right: 10px;
+
+				> span {
+					padding-left: 6px;
+					font-weight: 400;
+				}
+
+				> i {
+					font-size: 16px;
+					vertical-align: middle;
+				}
+			}
+		}
+	}
+}
+
+.file-dialog-modal-view-footer-buttons {
+	height: 40px;
+	line-height: 38px;
+	margin-left: $bound-margin;
+	margin-right: $bound-margin;
+	margin-bottom: 3px;
+
+	text-align: right;
+
+	button {
+		height: 30px;
+		line-height: 28px;
+		min-width: 110px;
+
+		vertical-align: middle;
+
+		&.primary {
+			background-color: $primary-button-bg-color;
+			color: $primary-button-color;
+
+			transition: ease-in-out .2s;
+
+			&:hover {
+				background-color: darken($primary-button-bg-color, 5%);
+			}
+
+			&:focus {
+				background-color: darken($primary-button-bg-color, 10%);
+			}
+
+			&:disabled {
+				background-color: lighten($primary-button-bg-color, 5%);
+			}
+		}
+	}
+
+	button+button {
+		margin-left: 15px;
+	}
+}

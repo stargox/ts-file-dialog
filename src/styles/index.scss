@@ -1,0 +1,25 @@
+$text-color: #333;
+
+$dialog-bg-color: #f1f1f1;
+
+$header-title-bg-color: #26A69A;
+$header-title-color: white;
+
+$button-bg-color: #cbcbcb;
+
+$primary-button-bg-color: #26A69A;
+$primary-button-color: white;
+
+$bg-color-error: #ff7070;
+$color-error: $text-color;
+
+$bg-color-warning: #ffc400;
+$color-warning: $text-color;
+
+$bg-color-alert: #262d40;
+$color-alert: white;
+
+@import 'modalDialog.scss';
+@import 'modalView.scss';
+@import 'filesListPanel.scss';
+@import 'dirPathPanel.scss';

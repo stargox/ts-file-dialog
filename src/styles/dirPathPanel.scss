@@ -1,0 +1,68 @@
+.file-dialog-dir-path {
+	box-sizing: border-box;
+
+	height: 25px;
+	padding: 0 5px 0 5px;
+	align-items: center;
+	
+	line-height: 23px;
+
+	border: 1px solid darken($dialog-bg-color, 10%);
+
+	overflow-x: auto;
+
+	.scroll-container {
+		display: flex;
+
+		overflow-x: hidden;
+		flex-wrap: nowrap;
+
+		>* {
+			flex-shrink: 0;
+		}
+	}
+
+	.horizontal-scroll-track {
+		right: 2px;
+		bottom: 0;
+		left: 2px;
+		border-radius: 3px;
+		transition: opacity 200ms;
+		padding-bottom: 0px;
+	}
+
+	.file-dialog-dir-path-element {
+		padding: 0px 1px;
+		line-height: 23px;
+		height: 24px;
+
+		cursor: pointer;
+
+		font-size: 14px;
+		border-left: 1px solid transparent;
+		border-right: 1px solid transparent;
+
+		transition: ease-in-out .2s;
+
+		&:hover {
+			background-color: darken($dialog-bg-color, 5%);
+			border-left: 1px solid darken($dialog-bg-color, 10%);
+			border-right: 1px solid darken($dialog-bg-color, 10%);
+		}
+	}
+
+	.file-dialog-dir-path-splitter {
+		width: 11px;
+		line-height: 23px;
+		height: 24px;
+
+		font-size: 16px;
+		
+		user-select: none;
+		-ms-user-select: none;
+
+		i {
+			margin-left: -3px;
+		}
+	}
+}

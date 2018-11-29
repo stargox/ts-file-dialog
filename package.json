@@ -1,0 +1,43 @@
+{
+	"name": "file-dialog",
+	"version": "0.0.1",
+	"description": "File Dialog",
+	"main": "src/index.js",
+	"scripts": {
+		"clean": "rimraf {lib,dist}",
+		"dev": "webpack-dev-server --progress --colors --hot --config webpack.config.dev.js",
+		"prebuild": "npm run clean",
+		"build": "webpack --config webpack.config.prod.js -p --progress",
+		"prepublish": "npm run build"
+	},
+	"author": "RodionMovchan",
+	"license": "ISC",
+	"dependencies": {},
+	"devDependencies": {
+		"@types/lodash": "4.14.88",
+		"@types/node": "^10.12.10",
+		"@types/react": "^16.0.35",
+		"@types/react-dom": "^16.0.3",
+		"@types/react-modal": "^3.2.1",
+		"awesome-typescript-loader": "3.2.1",
+		"css-loader": "^0.25.0",
+		"extract-text-webpack-plugin": "^3.0.2",
+		"lodash": "4.17.4",
+		"node-sass": "^4.8.1",
+		"react": "^16.2.0",
+		"react-custom-scrollbars": "^4.2.1",
+		"react-dom": "^16.2.0",
+		"react-modal": "^3.5.1",
+		"rimraf": "^2.6.1",
+		"sass-loader": "^6.0.7",
+		"style-loader": "^0.13.1",
+		"tslint": "^5.11.0",
+		"typescript": "^3.0.0",
+		"webpack": "3.8.1",
+		"webpack-dev-server": "2.9.7",
+		"webpack-merge": "^4.1.2"
+	},
+	"files": [
+		"dist/"
+	]
+}

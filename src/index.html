@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.4.85/css/materialdesignicons.min.css">
+	</head>
+	<body>
+		<div id="file-dialog-id"></div>
+
+		<div>
+			<button onclick="showFileDialog()">show file dialog</button>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+		<script src="./assets/file-dialog.js"></script>
+		<script>
+			var fileDialogId = 'file-dialog-id';
+
+			var showElement = function(id) {
+				if (!id) return;
+				($('#' + id)).css('display', 'block');
+			};
+
+			var hideElement = function(id) {
+				if (!id) return;
+				($('#' + id)).css('display', 'none');
+			};
+
+			var fileElement = function(path) { return { path: path } };
+
+			var getFiles = function() {
+				return new $.Deferred(function (def) {
+						setTimeout(function () {
+							def.resolve([
+								fileElement('test\\file1.txt'),
+								fileElement('test1\\file2.txt'),
+								fileElement('folder1\\folder2\\file4.txt'),
+								fileElement('folder1\\folder2\\folder3\\folder4\\folder5\\folder6\\folder7\\folder8\\folder9\\file2.txt'),
+								fileElement('fileAA1.txt'),
+								fileElement('fileBB2.txt'),
+								fileElement('file1\\file3.txt'),
+								fileElement('file4.txt'),
+								fileElement('file5.txt'),
+								fileElement('Untitled.txt'),
+							]);
+						}, 1000);
+					});
+			};
+
+			var confirm = function(options) {
+				console.log('confirmFile')
+				console.dir(options)
+				return new $.Deferred(function (def) {
+					setTimeout(function () {
+						def.resolve({ id: 'path_' + options.path });
+					}, 1000);
+				});
+			};
+
+			var onSuccess = function(saveResult) {
+				console.log('onSuccess: path = ' + saveResult.path);
+				hideElement(fileDialogId);
+			};
+
+			var onClose = function() {
+				console.log('onClose')
+				hideElement(fileDialogId);
+			};
+
+			function showFileDialog() {
+				showElement(fileDialogId);
+				fileDialog.create(fileDialogId, {
+					fileInfo: {
+						path: 'Untitled',
+					},
+					locale: 'en',
+					pathSeparator: '\\',
+					extensions: ['.txt'],
+					ignoreCase: true,
+					confirmOnDoubleClick: false,
+					inputNotification: true,
+					api: {
+						getFiles: getFiles,
+						confirm: confirm,
+					},
+					onSuccess: onSuccess,
+					onClose: onClose,
+				});
+			}
+
+			setTimeout(function() {
+				showFileDialog();
+			}, 500);
+		</script>
+	</body>
+</html>
