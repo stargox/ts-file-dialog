@@ -23,10 +23,6 @@ export type ModalOptions = {
 	confirmOnDoubleClick?: boolean,
 	inputNotification?: boolean,
 	extensions: Array<string>,
-	onSuccess?: (saveResult: {
-		path: string,
-		id: string,
-	}) => void,
 	onClose?: () => void,
 	api: {
 		getFiles: () => Promise<Array<{
@@ -34,6 +30,6 @@ export type ModalOptions = {
 		}>>,
 		confirm: (options: {
 			path: string,
-		}) => Promise<{ id: string }>,
+		}) => Promise<void>,
 	},
 }

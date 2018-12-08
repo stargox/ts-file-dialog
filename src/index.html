@@ -18,20 +18,7 @@
 		<script>
 			const fileDialogId = 'file-dialog-id';
 
-			const showElement = function(id) {
-				const element = id && document.getElementById(id);
-				if (!element) return;
-				element.style.display = 'block';
-			};
-
-			const hideElement = function(id) {
-				const element = id && document.getElementById(id);
-				if (!element) return;
-				element.style.display = 'none';
-			};
-
 			const fileElement = (path) => ({ path });
-
 			const getFiles = () => {
 				console.log('getting files');
 				// test getting files
@@ -64,19 +51,11 @@
 				});
 			};
 
-			const onSuccess = (saveResult) => {
-				console.log('success')
-				console.dir(saveResult);
-				hideElement(fileDialogId);
-			};
-
 			const onClose = () => {
 				console.log('close')
-				hideElement(fileDialogId);
 			};
 
 			function showFileDialog() {
-				showElement(fileDialogId);
 				fileDialog.create(fileDialogId, {
 					fileInfo: {
 						path: 'Untitled',
@@ -91,7 +70,6 @@
 						getFiles: getFiles,
 						confirm: confirm,
 					},
-					onSuccess: onSuccess,
 					onClose: onClose,
 				});
 			}

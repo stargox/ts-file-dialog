@@ -33,9 +33,9 @@ function createFileDialog(id: string, options: ModalOptions) {
 	const defaultDir = Path.getDirName(filePath);
 	const defaultName = Path.getFileName(filePath);
 
-	const modalDialogProps: React.Attributes & ModalDialogProps = {
-		key: Math.random(), // recreate component on each call to cleanup states
+	const modalDialogProps: ModalDialogProps = {
 		dialogId: id,
+		isOpen: true,
 		ignoreCase,
 		confirmOnDoubleClick,
 		inputNotification,
@@ -50,7 +50,6 @@ function createFileDialog(id: string, options: ModalOptions) {
 			);
 		},
 		onClose: options.onClose,
-		onCancel: options.onClose,
 		onConfirm: (callBack, { dir, name }) => {
 			const path = Path.addExtension(Path.join(dir, name));
 			asyncCall(
@@ -61,10 +60,9 @@ function createFileDialog(id: string, options: ModalOptions) {
 						if (callBack.onError) callBack.onError(message);
 						if (callBack.onFinish) callBack.onFinish();
 					},
-					onSuccess: ({ id }) => {
+					onSuccess: () => {
 						if (callBack.onSuccess) callBack.onSuccess();
 						if (callBack.onFinish) callBack.onFinish();
-						if (options.onSuccess) options.onSuccess({ id, path });
 					},
 				}
 			);

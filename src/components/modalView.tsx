@@ -23,17 +23,17 @@ export type ModalViewProps = {
 	defaultName: string,
 	getFiles: GetFilesApi,
 	onCancel: () => void,
-	onConfirm: OnConfirmApi,
+	onConfirm: (dir: string, name: string) => void,
+	files: Array<string>,
+	errorMessage: string,
+	isLoading: boolean,
+	isProcessing: boolean,
 };
 
 export type ModalViewState = {
 	name: string;
 	dir: string,
-	files: Array<string>,
 	filter: string,
-	errorMessage: string,
-	isLoading: boolean,
-	isProcessing: boolean,
 	isOverwrite: boolean,
 };
 
@@ -41,47 +41,25 @@ export class ModalView extends React.PureComponent<ModalViewProps, ModalViewStat
 	constructor(props) {
 		super(props);
 		this.state = {
-			files: [],
 			dir: props.defaultDir,
 			name: props.defaultName,
 			filter: '',
-			errorMessage: '',
-			isLoading: false,
-			isProcessing: false,
 			isOverwrite: false,
 		};
 	}
 
-	isUnmounted: boolean;
-
-	componentDidMount() {
-		this.props.getFiles(
-			{
-				onStart: () => !this.isUnmounted && this.setState({ isLoading: true }),
-				onFinish: () => !this.isUnmounted && this.setState({ isLoading: false }),
-				onSuccess: (files) => {
-					if (this.isUnmounted) return;
-
-					this.setState({ files })
-					this.updateOverwrite(files, this.state.dir, this.state.name);
-				},
-				onError: (errorMessage) => !this.isUnmounted && this.setState({ errorMessage }),
-			}
-		);
-	}
-
-	componentWillUnmount() {
-		this.isUnmounted = true;
+	componentWillReceiveProps(nextProps) {
+		if (this.props.files !== nextProps.files) this.updateOverwrite(nextProps.files, this.state.dir, this.state.name);
 	}
 
 	setDir = (dir) => {
 		this.setState({ dir });
-		this.updateOverwrite(this.state.files, dir, this.state.name);
+		this.updateOverwrite(this.props.files, dir, this.state.name);
 	}
 
 	setName = (name) => {
 		this.setState({ name });
-		this.updateOverwrite(this.state.files, this.state.dir, name);
+		this.updateOverwrite(this.props.files, this.state.dir, name);
 	}
 
 	updateOverwrite = (files, dir, name) => {
@@ -107,21 +85,7 @@ export class ModalView extends React.PureComponent<ModalViewProps, ModalViewStat
 
 	handleConfirmClick = () => {
 		const { dir, name } = this.state;
-		this.onConfirm(dir, name);
-	}
-
-	onConfirm = (dir, name) => {
-		this.props.onConfirm(
-			{
-				onStart: () => !this.isUnmounted && this.setState({ isProcessing: true }),
-				onFinish: () => !this.isUnmounted && this.setState({ isProcessing: false }),
-				onError: (errorMessage) => !this.isUnmounted && this.setState({ errorMessage }),
-			},
-			{
-				name,
-				dir,
-			},
-		);
+		this.props.onConfirm(dir, name);
 	}
 
 	handleNameChange = (e) => {
@@ -145,8 +109,8 @@ export class ModalView extends React.PureComponent<ModalViewProps, ModalViewStat
 	}
 
 	render() {
-		const { dir, name, files, filter, isLoading, isProcessing, errorMessage, isOverwrite } = this.state;
-		const { ignoreCase, confirmOnDoubleClick, inputNotification } = this.props; 
+		const { dir, name, filter, isOverwrite } = this.state;
+		const { ignoreCase, confirmOnDoubleClick, inputNotification, files, isLoading, isProcessing, errorMessage, onConfirm } = this.props; 
 
 		const isValid = validate(name);
 
@@ -159,7 +123,7 @@ export class ModalView extends React.PureComponent<ModalViewProps, ModalViewStat
 			confirmOnDoubleClick,
 			setDir: this.setDir,
 			setName: this.setName,
-			confirm: this.onConfirm,
+			confirm: onConfirm,
 		};
 
 		const nameInputProps = {
