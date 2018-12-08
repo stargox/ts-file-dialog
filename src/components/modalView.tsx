@@ -52,18 +52,27 @@ export class ModalView extends React.Component<ModalViewProps, ModalViewState> {
 		};
 	}
 
+	isUnmounted: boolean;
+
 	componentDidMount() {
 		this.props.getFiles(
 			{
-				onStart: () => this.setState({ isLoading: true }),
-				onFinish: () => this.setState({ isLoading: false }),
+				onStart: () => !this.isUnmounted && this.setState({ isLoading: true }),
+				onFinish: () => !this.isUnmounted && this.setState({ isLoading: false }),
 				onSuccess: (files) => {
+					if (this.isUnmounted) return;
+
 					this.setState({ files })
 					this.updateOverwrite(files, this.state.dir, this.state.name);
 				},
-				onError: (errorMessage) => this.setState({ errorMessage }),
+				onError: (errorMessage) => !this.isUnmounted && this.setState({ errorMessage }),
 			}
 		);
+		this.isUnmounted = false;
+	}
+
+	componentWillUnmount() {
+		this.isUnmounted = true;
 	}
 
 	setDir = (dir) => {
@@ -103,13 +112,11 @@ export class ModalView extends React.Component<ModalViewProps, ModalViewState> {
 	}
 
 	onConfirm = (dir, name) => {
-		this.setState({ isProcessing: true });
-
 		this.props.onConfirm(
 			{
-				onStart: () => this.setState({ isProcessing: true }),
-				onFinish: () => this.setState({ isProcessing: false }),
-				onError: (errorMessage) => this.setState({ errorMessage }),
+				onStart: () => !this.isUnmounted && this.setState({ isProcessing: true }),
+				onFinish: () => !this.isUnmounted && this.setState({ isProcessing: false }),
+				onError: (errorMessage) => !this.isUnmounted && this.setState({ errorMessage }),
 			},
 			{
 				name,
