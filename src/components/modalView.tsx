@@ -68,7 +68,6 @@ export class ModalView extends React.PureComponent<ModalViewProps, ModalViewStat
 				onError: (errorMessage) => !this.isUnmounted && this.setState({ errorMessage }),
 			}
 		);
-		this.isUnmounted = false;
 	}
 
 	componentWillUnmount() {
