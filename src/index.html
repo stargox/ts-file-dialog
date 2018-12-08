@@ -14,59 +14,64 @@
 			<button onclick="showFileDialog()">show file dialog</button>
 		</div>
 
-		<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 		<script src="./assets/file-dialog.js"></script>
 		<script>
-			var fileDialogId = 'file-dialog-id';
+			const fileDialogId = 'file-dialog-id';
 
-			var showElement = function(id) {
-				if (!id) return;
-				($('#' + id)).css('display', 'block');
+			const showElement = function(id) {
+				const element = id && document.getElementById(id);
+				if (!element) return;
+				element.style.display = 'block';
 			};
 
-			var hideElement = function(id) {
-				if (!id) return;
-				($('#' + id)).css('display', 'none');
+			const hideElement = function(id) {
+				const element = id && document.getElementById(id);
+				if (!element) return;
+				element.style.display = 'none';
 			};
 
-			var fileElement = function(path) { return { path: path } };
+			const fileElement = (path) => ({ path });
 
-			var getFiles = function() {
-				return new $.Deferred(function (def) {
-						setTimeout(function () {
-							def.resolve([
-								fileElement('test\\file1.txt'),
-								fileElement('test1\\file2.txt'),
-								fileElement('folder1\\folder2\\file4.txt'),
-								fileElement('folder1\\folder2\\folder3\\folder4\\folder5\\folder6\\folder7\\folder8\\folder9\\file2.txt'),
-								fileElement('fileAA1.txt'),
-								fileElement('fileBB2.txt'),
-								fileElement('file1\\file3.txt'),
-								fileElement('file4.txt'),
-								fileElement('file5.txt'),
-								fileElement('Untitled.txt'),
-							]);
-						}, 1000);
-					});
-			};
-
-			var confirm = function(options) {
-				console.log('confirmFile')
-				console.dir(options)
-				return new $.Deferred(function (def) {
+			const getFiles = () => {
+				console.log('getting files');
+				// test getting files
+				return new Promise((resolve) => {
 					setTimeout(function () {
-						def.resolve({ id: 'path_' + options.path });
+						resolve([
+							fileElement('test\\file1.txt'),
+							fileElement('test1\\file2.txt'),
+							fileElement('folder1\\folder2\\file4.txt'),
+							fileElement('folder1\\folder2\\folder3\\folder4\\folder5\\folder6\\folder7\\folder8\\folder9\\file2.txt'),
+							fileElement('fileAA1.txt'),
+							fileElement('fileBB2.txt'),
+							fileElement('file1\\file3.txt'),
+							fileElement('file4.txt'),
+							fileElement('file5.txt'),
+							fileElement('Untitled.txt'),
+						]);
 					}, 1000);
 				});
 			};
 
-			var onSuccess = function(saveResult) {
-				console.log('onSuccess: path = ' + saveResult.path);
+			const confirm = (options) => {
+				console.log('confirm')
+				console.dir(options);
+				// test confirming
+				return new Promise((resolve) => {
+					setTimeout(function () {
+						resolve({ id: 'path_' + options.path });
+					}, 1000);
+				});
+			};
+
+			const onSuccess = (saveResult) => {
+				console.log('success')
+				console.dir(saveResult);
 				hideElement(fileDialogId);
 			};
 
-			var onClose = function() {
-				console.log('onClose')
+			const onClose = () => {
+				console.log('close')
 				hideElement(fileDialogId);
 			};
 

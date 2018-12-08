@@ -37,7 +37,7 @@ export type ModalViewState = {
 	isOverwrite: boolean,
 };
 
-export class ModalView extends React.Component<ModalViewProps, ModalViewState> {
+export class ModalView extends React.PureComponent<ModalViewProps, ModalViewState> {
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -13,7 +13,7 @@ export type DirPathState = {
 	scrolling: boolean,
 };
 
-export class DirPath extends React.Component<DirPathProps, DirPathState> {
+export class DirPath extends React.PureComponent<DirPathProps, DirPathState> {
 
 	constructor(props) {
 		super(props);

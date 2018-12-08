@@ -88,7 +88,7 @@ const getIcon = (type) => {
 	}
 }
 
-export class FilesList extends React.Component<FilesListProps, FilesListState> {
+export class FilesList extends React.PureComponent<FilesListProps, FilesListState> {
 	constructor(props) {
 		super(props);
 		this.state = {
